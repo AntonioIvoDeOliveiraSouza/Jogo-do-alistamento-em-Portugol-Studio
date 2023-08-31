@@ -1,0 +1,93 @@
+/* JOGO DO ALISTAMENTO
+ * Desenvolvido por Antonio Ivo De Oliveira Souza - 31/08/2023
+ * Linguagem - Portugol Studio
+ * Instituto Federal do Piauí - IFPI Campus Parnaíba
+ */
+programa
+{
+	inclua biblioteca Util
+	
+	funcao inicio()
+	{
+		caracter x
+		inteiro contador, permitidos, recusados, erros, acertos, idade, peso, opcao, voluntarios
+		inteiro idademin, idademax, pesomin, pesomax
+		//Variáveis definidas:
+		contador = 1	erros = 0
+		permitidos = 0 acertos = 0
+		recusados = 0
+		//Definir variáveis para a idade mínima e máxima:
+		idademin = Util.sorteia(18,50)
+		idademax = Util.sorteia(idademin+5, 99)
+		//Definir variáveis para o peso mínimo e peso máximo:
+		pesomin = Util.sorteia(30, 60)
+		pesomax = Util.sorteia(pesomin+5, 120)
+		//Voluntários para a contagem do jogo, sinta-se livre para alterar:
+		voluntarios = 10
+		//"Menu do jogo"
+		escreva("+=====================+\n")
+		escreva("| JOGO DO ALISTAMENTO |\n")
+		escreva("+=====================+\n")
+		escreva("Estamos em guerra, precisamos de soldados\n")
+		escreva("Para esta situação, você só pode alistar:\n")
+		escreva("- pessoas entre ",idademin," e ",idademax," anos;\n")
+		escreva("- indíviduos acima dos ",pesomin,"kg e menos de ",pesomax,"kg;\n")
+		escreva("Há ",voluntarios," voluntários, o exército conta com você\n")
+		escreva("Para cada acerto, você receberá uma comissão de R$10,00\n")
+		escreva("Pressione qualquer tecla para continuar\n")
+		leia(x)
+		//Entrada em loop do minigame, inicialmente com somente 10 repetições
+		faca{
+			limpa()
+			//Uso da biblioteca útil a fim de utilizar passageiros com valores aleatórios:
+			idade = Util.sorteia(10, 100)
+			peso = Util.sorteia(20, 150)
+			//Apresentação dos dados:
+			escreva("VOLUNTÁRIO NÙMERO ",contador,":\n")
+			escreva("IDADE:",idade)
+			escreva("\nPESO:",peso)
+			escreva("\n+==========================+")
+			escreva("\n|PERMITIR [1]   RECUSAR [2]|")
+			escreva("\n+==========================+")
+			escreva("\nDigite a sua opção: ")
+			leia(opcao) //Decisão do usuário
+			se(opcao == 1){ //Se permitir o alistamento
+				escreva("Sua entrada foi permitida")
+				permitidos++
+				//Análise se houve erro ou não:
+				se(idade>idademax ou idade<idademin)//Se foi permitido alistamento de um jovem ou idoso
+					erros++
+				senao se(peso>pesomax ou peso<pesomin)//Se não for o peso correspondente
+					erros++
+				senao//Se tudo estiver de acordo, será contado acerto
+					acertos++
+			}
+			senao se(opcao == 2){ //Se recusar o alistamento
+				escreva("Você não pode se alistar")
+				recusados++
+				//Análise se houve erro ou não
+				se(idade>=idademin e idade<=idademax e peso>=pesomin e peso<=pesomax)//Se foi recusado o alistamento de alguém compativel
+					erros++
+				senao
+					acertos++
+			}
+			senao{//Se outro número for inserido:
+				escreva("ERRO! VOCÊ DIGITOU NÚMERO NÃO CORRESPONDENTE!")
+				contador-=1
+			}
+			Util.aguarde(1500)
+			contador+=1
+		}enquanto(contador<=voluntarios)//Fim da repetição
+		//Mostrar resultados e comissão:
+		inteiro grana
+		grana = acertos*10
+		limpa()
+		escreva("+===========+")
+		escreva("\n|FIM DE JOGO|")
+		escreva("\n+===========+")
+		escreva("\nPermitidos: ",permitidos)
+		escreva("\nRecusados: ",recusados)
+		escreva("\nDeméritos: ", erros)
+		escreva("\nComissão: R$",grana)
+	}
+}
